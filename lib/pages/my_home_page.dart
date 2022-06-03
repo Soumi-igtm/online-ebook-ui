@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:online_ebook/detail_audio_page.dart';
 
 import 'package:online_ebook/my_tabs.dart';
 
@@ -12,9 +13,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-   List<dynamic>? popularBooks;
-   List<dynamic>? books;
-  List<dynamic>? trendingBooks;
+   late List popularBooks;
+   late List books;
+  late List trendingBooks;
 
   late ScrollController _scrollController;
   late TabController _tabController;
@@ -157,76 +158,85 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           ListView.builder(
                               itemCount: books==null?0:books!.length,
                               itemBuilder: (_, i){
-                            return Container(
-                              margin: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 18),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white54,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 2,
-                                      offset: Offset(0, 0),
-                                      color: Colors.white.withOpacity(0.2),
-                                    )
-                                  ]
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 90,
-                                        height: 120,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                              image:AssetImage(books![i]["img"]),
+                            return
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,
+                                 MaterialPageRoute(builder: (context)=>DetailAudioPage(booksData:books, index:i))
+                                );
+                              },
+                                child:Container(
+                                  margin: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 18),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white54,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 2,
+                                            offset: Offset(0, 0),
+                                            color: Colors.white.withOpacity(0.2),
                                           )
-                                        ),    
-                                      ),
-                                      SizedBox(width: 10,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        ]
+                                    ),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Row(
                                         children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons.star, size: 24, color: Colors.yellow),
-                                              SizedBox(width: 5,),
-                                              Text(books![i]["rating"], style: TextStyle(
-                                                color: Colors.redAccent,
-                                              ),)
-                                            ],
-                                          ),
-                                          Text(books![i]["title"], style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.green[800]
-                                          ),),
-                                          Text(books![i]["text"], style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.blue[800]
-                                          ),),
                                           Container(
-                                            width: 60,
-                                              height: 20,
+                                            width: 90,
+                                            height: 120,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(3),
-                                              color: Colors.red,
+                                                borderRadius: BorderRadius.circular(10),
+                                                image: DecorationImage(
+                                                  image:AssetImage(books![i]["img"]),
+                                                )
                                             ),
-                                            child: Text("love", style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white,
-                                            ),),
-                                            alignment: Alignment.center,
+                                          ),
+                                          SizedBox(width: 10,),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.star, size: 24, color: Colors.yellow),
+                                                  SizedBox(width: 5,),
+                                                  Text(books![i]["rating"], style: TextStyle(
+                                                    color: Colors.redAccent,
+                                                  ),)
+                                                ],
+                                              ),
+                                              Text(books![i]["title"], style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.green[800]
+                                              ),),
+                                              Text(books![i]["text"], style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.blue[800]
+                                              ),),
+                                              Container(
+                                                width: 60,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(3),
+                                                  color: Colors.red,
+                                                ),
+                                                child: Text("love", style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.white,
+                                                ),),
+                                                alignment: Alignment.center,
+                                              )
+                                            ],
                                           )
                                         ],
-                                      )
-                                    ],
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
+                                )
                             );
+
                           }),
                             ListView.builder(
                                 itemCount: popularBooks==null?0:popularBooks!.length,
